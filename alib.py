@@ -29,6 +29,7 @@ for i in book_list:
     driver.get(link)
     books_num = driver.find_element_by_xpath("/html/body/table[4]/tbody/tr/td")
     books=books_num.text
-    print(books)
+    if books != "Рассылка: Новые поступления по ключевым словам.":
+        print(books)
     time.sleep(1)
 driver.quit()
