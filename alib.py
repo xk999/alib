@@ -1,9 +1,8 @@
+# -*- coding: utf-8 -*-
 import openpyxl
 import requests
 from urllib import request
 from bs4 import BeautifulSoup
-from lxml import html
-from selenium import webdriver
 import time
 
 wb = openpyxl.load_workbook(filename="books.xlsx")
@@ -23,13 +22,11 @@ for i in list1:
     book_list.append(encoded)
 
 #search for books
-driver = webdriver.Chrome()
-for i in book_list:
-    link = "https://www.alib.ru/find3.php4?tfind=" + i
-    driver.get(link)
-    books_num = driver.find_element_by_xpath("/html/body/table[4]/tbody/tr/td")
-    books=books_num.text
-    if books != "Рассылка: Новые поступления по ключевым словам.":
-        print(books)
+for book in book_list:
+    link = "https://www.alib.ru/find3.php4?tfind=" + book
+    page= requests.get(link)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    books = soup.findAll("table", {"bgcolor" : "#FFFFFF"})
+    for element in books:
+        print(element.text)
     time.sleep(1)
-driver.quit()
