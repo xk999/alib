@@ -20,7 +20,7 @@ for i in range(num,rows+1):
 
 book_list = []
 # convert rows to the required encoding
-#'bg' is added because sometimes Russian words are identified as Bulgarian) 
+# 'bg' is added because sometimes Russian words are identified as Bulgarian
 for i in list1:
     lang = detect(str(i))
     if lang == 'ru' or 'bg': 
@@ -38,7 +38,7 @@ for book in book_list:
     books = soup.findAll("table", {"bgcolor" : "#FFFFFF"})
     for element in books:
         with open('output.txt', 'a') as f:
-            f.write(element.text)        
+            f.write(element.text.lstrip("Люди ищут книги: "))        
     time.sleep(1) # added to avoid getting blocked for suspicious activity
 f = open('output.txt', 'r')
 print(f.read())
